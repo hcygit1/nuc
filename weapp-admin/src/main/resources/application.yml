@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+#      location: D:/mypic/uploadPath/upload/
+      max-file-size: 100MB  # 单个文件大小
+      max-request-size: 100MB
+server:
+  port: 8082
+
+#spring boot集成mybatis的方式打印sql
+logging:
+  level:
+    com.personal.webappadmin: DEBUG
+

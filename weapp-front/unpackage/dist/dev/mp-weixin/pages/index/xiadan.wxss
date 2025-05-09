@@ -1,0 +1,52 @@
+
+.container {
+  padding: 20px;
+}
+
+/* 商品信息样式 */
+.product-info {
+  margin-bottom: 20px;
+}
+.product-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+.product-price {
+  font-size: 16px;
+  color: #e4393c;
+  margin-top: 10px;
+}
+
+/* 时间选择器样式 */
+.time-picker {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.label {
+  font-size: 14px;
+  color: #666;
+  margin-right: 10px;
+}
+.value {
+  font-size: 14px;
+  color: #333;
+}
+
+/* 底部按钮样式 */
+.footer-buttons {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+.footer-buttons .u-button {
+  flex: 1;
+  margin: 0 5px;
+}
+

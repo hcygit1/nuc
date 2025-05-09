@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.personal.weappadmin.bussiness.repo.MaintenanceRecordRepo">
+
+
+    <select id="findList" resultType="map">
+        select t.* from  maintenance_record t where carId=#{carId}
+        order by id desc
+    </select>
+
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into  maintenance_record
+        (
+
+                carId,
+                remark,
+                mainTime,
+                createTime,
+                updateTime
+
+        )
+        values (
+
+                #{carId},
+                #{remark},
+                #{mainTime},
+                now(),
+                now()
+       )
+    </insert>
+
+    <update id="update">
+        update  maintenance_record set
+
+                <if test="carId!=null">
+                    carId=#{carId},
+                </if>
+                <if test="remark!=null and remark!=''">
+                    remark=#{remark},
+                </if>
+        updateTime=now()
+        where id=#{id}
+
+    </update>
+
+    <update id="remove">
+        update maintenance_record set deleted=true where id=#{id}
+    </update>
+
+    <select id="get" resultType="com.personal.weappadmin.bussiness.model.MaintenanceRecord" >
+        select * from maintenance_record  where id=#{id}
+    </select>
+</mapper>
+

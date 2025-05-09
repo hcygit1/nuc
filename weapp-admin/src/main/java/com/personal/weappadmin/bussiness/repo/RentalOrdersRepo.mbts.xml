@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.personal.weappadmin.bussiness.repo.RentalOrdersRepo">
+
+
+
+
+    <select id="findList" resultType="map">
+        select t.*,tt.model,tt.brand,tt.price from  rental_orders t,rental_cars tt,weappuser ttt
+                                              where t.carId=tt.id and t.userId=ttt.id and  ttt.id=#{userId}
+        order by id desc
+    </select>
+
+
+    <select id="findListOrders" resultType="map">
+        select t.*,tt.model,tt.brand,tt.price,tt.vehicleModel,tt.endurance,ttt.mobile,ttt.mail,ttt.imageUrl,ttt.idCardUrl,ttt.dlCardUrl from  rental_orders t,rental_cars tt,weappuser ttt
+                                              where t.carId=tt.id and t.userId=ttt.id
+                                                    <if test="mobile!=null and mobile!=''">
+                                                        and  ttt.mobile=#{mobile}
+                                                    </if>
+
+        order by t.id desc
+    </select>
+
+
+    <select id="findListByCarId" resultType="map">
+        select t.*,tt.model,tt.brand,tt.price,tt.vehicleModel,tt.endurance,ttt.mobile,ttt.mail,ttt.imageUrl,ttt.idCardUrl,ttt.dlCardUrl from  rental_orders t,rental_cars tt,weappuser ttt
+                                              where t.carId=tt.id and t.userId=ttt.id and t.carId=#{carId}
+
+        order by t.id desc
+    </select>
+
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into  rental_orders
+        (
+
+                userId,
+                carId,
+                payType,
+                totalMoney,
+                rentalStartTime,
+                rentalEndTime,
+                returnlat,
+                returnlng,
+                payStatus,
+                pdfUrl,
+                createTime,
+                updateTime
+
+        )
+        values (
+
+                #{userId},
+                #{carId},
+                #{payType},
+                #{totalMoney},
+                #{rentalStartTime},
+                #{rentalEndTime},
+                #{returnlat},
+                #{returnlng},
+                #{payStatus},
+                #{pdfUrl},
+               now(),
+                now()
+       )
+    </insert>
+
+    <update id="update">
+        update  rental_orders set
+
+                <if test="userId!=null">
+                    userId=#{userId},
+                </if>
+                <if test="carId!=null">
+                    carId=#{carId},
+                </if>
+                <if test="payType!=null and payType!=''">
+                    payType=#{payType},
+                </if>
+                <if test="rentalStartTime!=null and rentalStartTime!=''">
+                    rentalStartTime=#{rentalStartTime},
+                </if>
+                <if test="rentalEndTime!=null and rentalEndTime!=''">
+                    rentalEndTime=#{rentalEndTime},
+                </if>
+                <if test="returnlat!=null and returnlat!=''">
+                    returnlat=#{returnlat},
+                </if>
+                <if test="returnlng!=null and returnlng!=''">
+                    returnlng=#{returnlng},
+                </if>
+                <if test="payStatus!=null and payStatus!=''">
+                    payStatus=#{payStatus},
+                </if>
+                <if test="rentalStatus!=null and rentalStatus!=''">
+                        rentalStatus=#{rentalStatus},
+                </if>
+                <if test="pdfUrl!=null and pdfUrl!=''">
+                    pdfUrl=#{pdfUrl},
+                </if>
+                <if test="deleted!=null">
+                    deleted=#{deleted},
+                </if>
+        updateTime=now()
+        where id=#{id}
+
+    </update>
+
+    <update id="remove">
+        update rental_orders set deleted=true where id=#{id}
+    </update>
+
+    <select id="get" resultType="com.personal.weappadmin.bussiness.model.RentalOrders" >
+        select * from rental_orders  where id=#{id}
+    </select>
+</mapper>
+

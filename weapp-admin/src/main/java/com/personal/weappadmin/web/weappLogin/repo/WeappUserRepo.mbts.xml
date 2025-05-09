@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.personal.weappadmin.web.weappLogin.repo.WeappUserRepo">
+
+    <select id="getByOpenId" resultType="com.personal.weappadmin.web.weappLogin.model.WeappUser">
+
+        select * from weappUser where openId=#{openId} and deleted=false order by id desc limit 1
+
+    </select>
+    <select id="findAllUser" resultType="com.personal.weappadmin.web.weappLogin.model.WeappUser">
+
+        select * from weappUser where 1=1
+                                    <if test="mobile!=null and mobile!=''">
+                                        and  mobile=#{mobile}
+                                    </if>
+                                    and deleted=false order by id desc
+
+    </select>
+    <select id="getByMobile" resultType="com.personal.weappadmin.web.weappLogin.model.WeappUser">
+
+        select * from weappUser where mobile=#{mobile} and deleted=false order by id desc limit 1
+
+    </select>
+
+    <insert id="add" flushCache="true" keyProperty="id" useGeneratedKeys="true">
+
+       insert into weappUser(mobile,password,nickName,idCardUrl,dlCardUrl,mail,imageUrl,createTime)
+        value (#{mobile},#{password},#{nickName},#{idCardUrl},#{dlCardUrl},#{mail},#{imageUrl},now())
+    </insert>
+
+    <select id="get"  resultType="com.personal.weappadmin.web.weappLogin.model.WeappUser">
+        select * from weappUser where id=#{id}
+    </select>
+
+    <update id="update">
+        update weappUser set
+        <if test="imageUrl!=null and imageUrl!=''">
+            imageUrl=#{imageUrl},
+        </if>
+        <if test="nickName!=null and nickName!=''">
+            nickName=#{nickName},
+        </if>
+        <if test="audit!=null and audit!=''">
+            audit=#{audit},
+        </if>
+        updateTime=now()
+        where id=#{id}
+
+    </update>
+
+    <update id="updateInfo">
+
+    update weappUser set
+     <if test="imageUrl!=null and imageUrl!=''">
+         imageUrl=#{imageUrl},
+     </if>
+        <if test="nickName!=null and nickName!=''">
+            nickName=#{nickName},
+        </if>
+        updateTime=now()
+            where id=#{userId}
+
+    </update>
+</mapper>

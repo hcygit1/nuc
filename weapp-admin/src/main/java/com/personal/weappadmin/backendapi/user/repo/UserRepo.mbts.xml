@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.personal.weappadmin.backendapi.user.repo.UserRepo">
+
+
+    <select id="getByMobile" resultType="com.personal.weappadmin.backendapi.user.model.User">
+        select * from `user` where enabled=1 and mobile=#{mobile} order by id desc limit 1
+    </select>
+
+
+    <insert id="add" keyProperty="id" useGeneratedKeys="true">
+
+        insert into `user`(mobile,loginName,password,enabled,age,address,sex,roles,createTime,updateTime)
+        value (#{mobile},#{loginName},#{password},#{enabled},#{age},#{address},#{sex},#{roles},now(),now())
+
+    </insert>
+
+    <select id="findAllUser" resultType="com.personal.weappadmin.backendapi.user.model.User">
+        select id,mobile,loginName,enabled,createTime  from `user` where enabled=1 order by id desc
+    </select>
+
+    <select id="findAllUserIncludeUnEable" resultType="com.personal.weappadmin.backendapi.user.model.User">
+        select *  from `user` where enabled=true
+
+
+                             <if test="mobile!=null and mobile!=''">
+                                 and `mobile` like CONCAT('%',#{mobile},'%')
+                             </if>
+                              <if test="loginName!=null and loginName!=''">
+                                  and `loginName` like CONCAT('%',#{loginName},'%')
+                             </if>
+                              <if test="age!=null and age!=''">
+                                  and age=#{age}
+                             </if>
+                              <if test="sex!=null and sex!=''">
+                                  and sex=#{sex}
+                             </if>
+                              <if test="address!=null and address!=''">
+                                  and `address` like CONCAT('%',#{address},'%')
+                             </if>
+                              order by id desc
+    </select>
+
+
+    <update id="updatePassword">
+        update `user` set password=#{password} where id=#{id} and mobile=#{mobile}
+    </update>
+
+    <update id="update">
+        update  `user` set
+            <if test="mobile!=null and mobile!=''">
+                mobile=#{mobile},
+            </if>
+            <if test="loginName!=null and loginName!=''">
+                loginName=#{loginName},
+            </if>
+             <if test="age!=null and age!=''">
+                 age=#{age},
+            </if>
+           <if test="photoUrl!=null and photoUrl!=''">
+                     photoUrl=#{photoUrl},
+            </if>
+  <if test="address!=null and address!=''">
+      address=#{address},
+            </if>
+ <if test="sex!=null and sex!=''">
+     sex=#{sex},
+            </if>
+     updateTime=now()
+   where id=#{id}
+    </update>
+
+    <update id="deletedUser">
+        update `user` set enabled=false where id=#{id}
+    </update>
+</mapper>

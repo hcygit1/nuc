@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.personal.weappadmin.bussiness.repo.EvaluateFeekBackRepo">
+
+
+
+    <select id="findList" resultType="map">
+        select t.*,tt.mobile,tt.mail,tt.imageUrl from evaluate_feedback t,weappuser tt where t.userId=tt.id and   t.deleted=false
+        order by t.id desc
+    </select>
+
+
+    <select id="findMyList" resultType="map">
+        select t.* from evaluate_feedback t where t.userId=#{userId}
+        order by t.id desc
+    </select>
+
+    <insert id="add" keyProperty="id" useGeneratedKeys="true">
+        insert into evaluate_feedback(userId,content,createTime,updateTime)
+        value(#{userId},#{content},now(),now())
+    </insert>
+
+
+    <update id="remove">
+        update evaluate_feedback set deleted=true
+        where id=#{id}
+    </update>
+
+    <update id="update">
+        update evaluate_feedback set dealResult=#{dealResult} , status='1',updateTime=now()
+        where id=#{id}
+    </update>
+
+    <select id="get" resultType="com.personal.weappadmin.bussiness.model.EvaluateFeekBack">
+        select * from evaluate_feedback where id=#{id}
+    </select>
+
+
+    <select id="getAvgStarsByUserId" resultType="String">
+        SELECT SUM(stars)/count(0) from evaluate_feedback where userId=#{userId} and deleted=0
+    </select>
+</mapper>

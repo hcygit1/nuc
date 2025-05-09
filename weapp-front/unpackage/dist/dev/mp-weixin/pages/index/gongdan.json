@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "我的工单",
+  "usingComponents": {
+    "u-list": "/node-modules/uview-ui/components/u-list/u-list",
+    "u-list-item": "/node-modules/uview-ui/components/u-list-item/u-list-item",
+    "u-tag": "/node-modules/uview-ui/components/u-tag/u-tag",
+    "u-line": "/node-modules/uview-ui/components/u-line/u-line",
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button",
+    "u-modal": "/node-modules/uview-ui/components/u-modal/u-modal",
+    "u-textarea": "/node-modules/uview-ui/components/u-textarea/u-textarea"
+  }
+}

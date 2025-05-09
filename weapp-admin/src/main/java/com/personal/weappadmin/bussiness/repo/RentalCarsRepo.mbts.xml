@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.personal.weappadmin.bussiness.repo.RentalCarsRepo">
+
+
+    <select id="findList" resultType="map">
+        select t.* from  rental_cars t
+                   where deleted=false
+        order by id desc
+    </select>
+    <select id="getRightData" resultType="map">
+        select t.* from  rental_cars t
+        where t.deleted=false and t.classify=#{classify}
+        <if test="minPrice!=null and minPrice!=''">
+            and CAST(price AS DOUBLE)>=#{minPrice}*100
+        </if>
+        <if test="maxPrice!=null and maxPrice!=''">
+            and #{maxPrice}*100>=CAST(price AS DOUBLE)
+        </if>
+        <if test="minEndurance!=null and minEndurance!=''">
+            and CAST(endurance AS DOUBLE)>=#{minEndurance}
+        </if>
+        <if test="maxEndurance!=null and maxEndurance!=''">
+            and #{maxEndurance}>=CAST(endurance AS DOUBLE)
+        </if>
+          <if test="vehicleModel!=null and vehicleModel!=''">
+            and vehicleModel=#{vehicleModel}
+        </if>
+    </select>
+
+
+    <select id="getvehicleModelArray" resultType="map">
+        select vehicleModel from  rental_cars t
+        where t.deleted=false group by vehicleModel
+    </select>
+
+
+    <select id="leftArray" resultType="map">
+        select t.id,t.classify from  rental_cars t where deleted=false group by classify
+    </select>
+
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into  rental_cars
+        (
+
+                model,
+                brand,
+                price,
+                availability,
+                vehicleModel,
+                endurance,
+                photosUrl,
+                glbFileUrl,
+                address,
+                lng,
+                lat,
+                status,
+                classify,
+                createTime,
+                updateTime
+
+        )
+        values (
+
+                #{model},
+                #{brand},
+                #{price},
+                #{availability},
+                #{vehicleModel},
+                #{endurance},
+                #{photosUrl},
+                #{glbFileUrl},
+                #{address},
+                #{lng},
+                #{lat},
+                #{status},
+                #{classify},
+                now(),
+                now()
+       )
+    </insert>
+
+    <update id="update">
+        update  rental_cars set
+
+                <if test="model!=null and model!=''">
+                    model=#{model},
+                </if>
+                <if test="brand!=null and brand!=''">
+                    brand=#{brand},
+                </if>
+                <if test="price!=null">
+                    price=#{price},
+                </if>
+                <if test="availability!=null and availability!=''">
+                    availability=#{availability},
+                </if>
+                <if test="vehicleModel!=null and vehicleModel!=''">
+                    vehicleModel=#{vehicleModel},
+                </if>
+                <if test="endurance!=null and endurance!=''">
+                    endurance=#{endurance},
+                </if>
+                <if test="photosUrl!=null and photosUrl!=''">
+                    photosUrl=#{photosUrl},
+                </if>
+                <if test="glbFileUrl!=null and glbFileUrl!=''">
+                    glbFileUrl=#{glbFileUrl},
+                </if>
+                <if test="lng!=null and lng!=''">
+                    lng=#{lng},
+                </if>
+                <if test="lat!=null and lat!=''">
+                    lat=#{lat},
+                </if>
+                <if test="status!=null and status!=''">
+                    status=#{status},
+                </if>
+                    <if test="address!=null and address!=''">
+                        address=#{address},
+                </if>
+                    <if test="classify!=null and classify!=''">
+        classify=#{classify},
+                </if>
+                <if test="deleted!=null">
+                    deleted=#{deleted},
+                </if>
+        updateTime=now()
+        where id=#{id}
+
+    </update>
+
+    <update id="remove">
+        update rental_cars set deleted=true where id=#{id}
+    </update>
+
+    <select id="get" resultType="com.personal.weappadmin.bussiness.model.RentalCars" >
+        select * from rental_cars  where id=#{id}
+    </select>
+
+    <select id="getpoints" resultType="map" >
+        select id,lat as latitude,lng as longitude,address as name,'/static/mark/mark.png' as iconPath,width,height from rental_cars
+        where lat is not null and lng is not null and deleted=false
+    </select>
+</mapper>
+

@@ -1,0 +1,25 @@
+{
+  "name": "weapp-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
+    "axios": "^1.7.9",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.0",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^4.10.38",
+    "signature_pad": "^5.0.4",
+    "three": "^0.115.0",
+    "three-platformize": "^1.133.3",
+    "uview-ui": "^2.0.36"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev:mp-weixin": "uni -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

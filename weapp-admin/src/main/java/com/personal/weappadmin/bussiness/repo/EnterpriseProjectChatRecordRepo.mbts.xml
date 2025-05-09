@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.personal.weappadmin.bussiness.repo.EnterpriseProjectChatRecordRepo">
+
+
+  <insert id="add" useGeneratedKeys="true" keyProperty="id">
+    insert into chat_record(userId,toUserId,content,roles,createTime, updateTime)
+    values (#{userId},#{toUserId},#{content}, #{roles},now(), now())
+  </insert>
+
+
+  <select id="findList" resultType="map"  >
+
+    SELECT aa.id,aa.sendUrl as url,aa.sendUsername as username,aa.`content` as info,aa.isMe from
+                   (SELECT t.id,tt.imageUrl as sendUrl,tt.nickName as sendUsername,t.content,true as isMe
+                   from chat_record t,weappuser tt where  t.userId=tt.id and t.userId=#{userId}
+                   union all
+                   SELECT t.id,'' as sendUrl ,'' as sendUsername,t.content,false as isMe
+                   from chat_record t where  t.toUserId=#{userId}) aa ORDER BY aa.id asc
+  </select>
+
+  <update id="setReadStatus">
+
+    update chat_record t set status='1',updateTime=now() where id=#{id} and status='0'
+
+  </update>
+  <update id="setReadStatusByParam">
+
+    update chat_record t set status='1',updateTime=now() where  t.toUserId=#{userId} and status='0'
+
+  </update>
+  <update id="setReadStatusByUserId">
+
+    update chat_record t set status='1',updateTime=now() where  t.userId=#{userId} and t.toUserId=0 and status='0'
+
+  </update>
+
+  <select id="findMyUnReadMessage" resultType="map">
+    select t.id, '' as url,'' as username ,t.content as info,false as isMe
+           from chat_record t where   t.toUserId=#{userId}  and status='0'
+  </select>
+
+  <select id="findSysUnReadMessage" resultType="map">
+
+    select t.id, t.userId,tt.mobile ,tt.mail,tt.imageUrl,'user' as sender,t.content,t.createTime as `time`
+           from chat_record t ,weappuser tt
+           where   t.userId=#{userId} and toUserId=0 and status='0' and t.userId=tt.id
+
+  </select>
+
+    <select id="findAllRecordUsers" resultType="map">
+            select  tt.id as userId, tt.mobile,tt.mail,tt.imageUrl from chat_record t,weappuser tt where t.roles='common'
+                                                     and t.userId=tt.id
+                                                     group by t.userId
+    </select>
+
+
+
+    <select id="findAllRecordByUserId" resultType="map"  >
+        SELECT aa.id, aa.userId,aa.mobile ,aa.mail,aa.imageUrl,aa.sender,aa.content,aa.`time` from
+            (SELECT t.id,tt.id as userId, tt.mobile,tt.mail,tt.imageUrl, 'user' as sender,t.content,t.createTime as `time`
+             from chat_record t,weappuser tt where  t.userId=tt.id and t.userId=#{userId}
+             union all
+             SELECT t.id, tt.id as userId, tt.mobile,tt.mail,tt.imageUrl,  'admin' as sender,t.content,t.createTime as `time`
+             from chat_record t,weappuser tt where  t.toUserId=#{userId} and t.toUserId=tt.id) aa ORDER BY aa.id asc
+    </select>
+
+</mapper>

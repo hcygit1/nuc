@@ -1,0 +1,16 @@
+
+.pay_success{
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center; /* 垂直居中 */
+	justify-content: center;
+	padding-top: 100px;
+}
+.pay_success_text{
+	height: 100%;
+	width: 100%;
+	text-align: center;
+	padding-top: 30px;
+}
+

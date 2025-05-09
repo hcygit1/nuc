@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.personal.weappadmin.rbac.repo.RbacUserRoleRepo">
+
+
+    <select id="getRoleByUserId" resultType="com.personal.weappadmin.rbac.model.RbacUserRole">
+        select * from rbac_userrole where userId=#{userId} and deleted=0;
+    </select>
+
+    <update id="deleteByUserId">
+
+        update rbac_userrole set deleted=1 where userId=#{userId} and deleted=0
+    </update>
+
+    <insert id="add">
+        insert into rbac_userrole(userId,roleId,opaId,createTime,updateTime)
+        value (#{userId},#{roleId},#{opaId},now(),now())
+    </insert>
+</mapper>

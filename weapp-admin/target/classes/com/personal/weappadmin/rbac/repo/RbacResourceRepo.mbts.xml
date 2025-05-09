@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.personal.weappadmin.rbac.repo.RbacResourceRepo">
+
+
+    <select id="selectParentMenu" resultType="com.personal.weappadmin.rbac.model.UserMenu">
+
+        SELECT ttt.id,ttt.jumpPath,ttt.`name`,ttt.iconStyle from rbac_userrole t ,rbac_roleresource tt,rbac_resource ttt
+
+        where t.roleId=tt.roleId
+
+        and tt.resourceId=ttt.id
+
+        and t.userId=#{userId} and ttt.parentId=1 and t.deleted=0 and tt.deleted=0 and ttt.deleted=0 ORDER BY ttt.sort asc;
+
+
+    </select>
+
+
+    <select id="selectChildrenMenu" resultType="com.personal.weappadmin.rbac.model.RbacResource">
+
+        SELECT id,jumpPath,`name`,iconStyle  from  rbac_resource  where parentId=#{id} and deleted=0 order by sort asc
+
+
+    </select>
+
+    <select id="selectChildrenMenuPer" resultType="com.personal.weappadmin.rbac.model.RbacResource">
+
+        SELECT ttt.id,ttt.jumpPath,ttt.`name`,ttt.iconStyle from rbac_userrole t ,rbac_roleresource tt,rbac_resource ttt
+
+        where t.roleId=tt.roleId
+
+          and tt.resourceId=ttt.id
+
+          and t.userId=#{userId} and ttt.parentId=#{id} and t.deleted=0 and tt.deleted=0 and ttt.deleted=0 ORDER BY ttt.sort asc;
+
+
+    </select>
+
+    
+    <select id="getTopNode" resultType="com.personal.weappadmin.rbac.model.UserMenu">
+        select  * from rbac_resource where parentId=0
+    </select>
+
+    <select id="getChildrenByParentNode" resultType="map">
+        SELECT id,`name` as label,description,iconStyle,jumpPath,sort from  rbac_resource  where parentId=#{id} and deleted=0 order by sort asc
+    </select>
+
+
+    <insert id="add">
+        insert into rbac_resource(`name`,parentId,description,sort,iconStyle,jumpPath,createTime,updateTime)
+        value (#{name},#{parentId},#{description},#{sort},#{iconStyle},#{jumpPath},now(),now())
+    </insert>
+
+    <update id="update">
+        update rbac_resource t set
+        <if test="name!=null and name!=''">
+            `name`=#{name},
+        </if>
+        <if test="description!=null and description!=''">
+            description=#{description},
+        </if>
+        <if test="sort!=null and sort!=''">
+            sort=#{sort},
+        </if>
+        <if test="iconStyle!=null and iconStyle!=''">
+            iconStyle=#{iconStyle},
+        </if>
+        <if test="jumpPath!=null and jumpPath!=''">
+            jumpPath=#{jumpPath},
+        </if>
+         <if test="deleted!=null">
+             deleted=#{deleted},
+        </if>
+        updateTime=now()
+        where id=#{id}
+    </update>
+
+
+    <update id="deletedById">
+      update rbac_resource set deleted=1,updateTime=now() where id=#{id} and deleted=0
+    </update>
+
+
+    <update id="deletedByParentId">
+      update rbac_resource set deleted=1,updateTime=now() where parentId=#{id} and deleted=0
+    </update>
+
+
+    <select id="get" resultType="com.personal.weappadmin.rbac.model.RbacResource">
+     select * from rbac_resource where id=#{id} and deleted =0
+    </select>
+
+    <select id="findParentIds" resultType="long">
+        select parentId from rbac_resource where  deleted =0 and  id in
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.personal.weappadmin.bussiness.repo.TraceLngLatRepo">
+
+
+
+
+
+
+    <select id="findList" resultType="map">
+        SELECT lng, lat FROM trace_lng_lat where orderId=#{orderId}
+    </select>
+
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into  trace_lng_lat
+        (
+
+                lng,
+                lat,
+                orderId,
+                carId,
+                createTime,
+                updateTime
+
+        )
+        values (
+
+                #{lng},
+                #{lat},
+                #{orderId},
+                #{carId},
+                now(),
+                now()
+       )
+    </insert>
+
+    <update id="update">
+        update  trace_lng_lat set
+
+                <if test="lng!=null and lng!=''">
+                    lng=#{lng},
+                </if>
+                <if test="lat!=null and lat!=''">
+                    lat=#{lat},
+                </if>
+                <if test="orderId!=null">
+                    orderId=#{orderId},
+                </if>
+                <if test="carId!=null">
+                    carId=#{carId},
+                </if>
+        updateTime=now()
+        where id=#{id}
+
+    </update>
+
+    <update id="remove">
+        update trace_lng_lat set deleted=true where id=#{id}
+    </update>
+
+    <select id="get" resultType="com.personal.weappadmin.bussiness.model.TraceLngLat" >
+        select * from trace_lng_lat  where id=#{id}
+    </select>
+
+</mapper>
+

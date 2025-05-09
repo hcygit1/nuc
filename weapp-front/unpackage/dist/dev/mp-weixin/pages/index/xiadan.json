@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "下单",
+  "usingComponents": {
+    "u-datetime-picker": "/node-modules/uview-ui/components/u-datetime-picker/u-datetime-picker",
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button",
+    "u-swiper": "/node-modules/uview-ui/components/u-swiper/u-swiper",
+    "u-modal": "/node-modules/uview-ui/components/u-modal/u-modal"
+  }
+}

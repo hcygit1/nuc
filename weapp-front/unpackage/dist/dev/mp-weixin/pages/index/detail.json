@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "详情",
+  "usingComponents": {
+    "c-3d-model": "/uni_modules/c-3d-model/components/c-3d-model/c-3d-model"
+  }
+}

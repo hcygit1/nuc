@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "我的订单",
+  "usingComponents": {
+    "u-list": "/node-modules/uview-ui/components/u-list/u-list",
+    "u-list-item": "/node-modules/uview-ui/components/u-list-item/u-list-item",
+    "u-tag": "/node-modules/uview-ui/components/u-tag/u-tag"
+  }
+}

@@ -1,0 +1,275 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	/* H5 样式 */
+
+
+
+
+
+
+
+	/* 小程序样式 */
+.chat-container.data-v-1c082308 {
+	  display: flex;
+	  flex-direction: column;
+	  height: 100vh;
+}
+.chat-content.data-v-1c082308 {
+  flex: 1;
+  padding: 20rpx;
+  overflow-y: auto;
+}
+.message-item.data-v-1c082308 {
+  margin-bottom: 20rpx;
+}
+	/* 左侧消息（对方） */
+.message-left.data-v-1c082308 {
+  display: flex;
+  align-items: flex-start;
+}
+.message-left .avatar.data-v-1c082308 {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+.message-left .message-text.data-v-1c082308 {
+  margin-left: 20rpx;
+  background-color: #f1f1f1;
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
+  max-width: 60%;
+}
+	/* 右侧消息（自己） */
+.message-right.data-v-1c082308 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end; /* 靠右对齐 */
+  padding-right: 15px;
+}
+.message-right .avatar.data-v-1c082308 {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+.message-right .message-text.data-v-1c082308 {
+  margin-right: 20rpx;
+  background-color: #007aff;
+  color: #fff;
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
+  max-width: 60%;
+}
+	/* 输入框和发送按钮 */
+.input-area.data-v-1c082308 {
+  display: flex;
+  align-items: center;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  background-color: #f8f8f8;
+}
+.input-box.data-v-1c082308 {
+  flex: 1;
+  margin-right: 20rpx;
+}
+.send-btn.data-v-1c082308 {
+	margin-left: 10rpx;
+  width: 120rpx;
+}
+
